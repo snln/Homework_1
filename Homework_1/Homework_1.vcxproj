@@ -141,6 +141,9 @@
   <ItemGroup>
     <ClCompile Include="Homework_1.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Coffee.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

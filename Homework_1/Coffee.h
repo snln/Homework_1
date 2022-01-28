@@ -4,19 +4,18 @@ using namespace std;
 
 class Coffee
 {
-public:
+private:
 	char* breed; //сорт
 	char* name;
-	int volume;
-	int price;
+	unsigned int volume;
+	double price;
 	bool milk;
 
 public:
-	Coffee() // конструктор БЕЗ параметров 
+	Coffee()
 	{
-		cout << "DEFAULT CTOR!\n";
 		volume = 250;
-		price = 20;
+		price = 20.5;
 		milk = true;
 		breed = new char[100];
 		strcpy_s(breed, 99, "Arabica");
@@ -24,58 +23,102 @@ public:
 		strcpy_s(name, 99, "Cappucino");
 	}
 	Coffee(const char* breed, const char* name,
-		int volume, int price, int milk) // конструктор С параметрами
+		int volume, int price, int milk)
 	{
-		cout << "PARAM CTOR!\n";
-
-		this->breed = new char[100];
-		strcpy_s(this->breed, 99, breed);
-
-		this->name = new char[100];
-		strcpy_s(this->name, 99, name);
-
-		this->volume = volume;
-		this->milk = milk;
-		this->price = price;
+		SetBreed(breed);
+		SetName(name);
+		SetVolume(volume);
+		SetPrice(price);
+		SetMilk(milk);
 	}
 
-	// конструктор копирования
-	Coffee(const Coffee& original)
+	~Coffee()
 	{
-		cout << "COPY CTOR!\n";
-
-		// под поля указатели выделяем новую память!
-		breed = new char[100];
-		strcpy_s(breed, 99, original.breed);
-		name = new char[100];
-		strcpy_s(name, 99, original.name);
-
-
-
-		// нежелательное поведение куонструктора копирования по умолчанию - он копирует АДРЕСА указателей!
-		//author = original.author;
-		//name = original.name;
-
-		milk = original.milk;
-		price = original.price;
-		volume = original.volume;
-	}
-
-	~Coffee() // деструктор
-	{
-		cout << "DEST\n";
 		if (breed != nullptr) delete[] breed;
 		if (name != nullptr) delete[] name;
 	}
 
-	void Show(/*const Book* this*/)
+	void Show() const
 	{
-		// this = new Book;
-		//cout << "Книга автора  " << author << "  \"" << name << "\" издание " << edition << "-е\n";
+		cout << "This is " << name << ", made from " << breed << " breed. It's volume is " << volume << " ml and it costs " << price << " UAH.\n";
+	}
+	void Milk() const
+	{
+		if (milk) cout << "This coffee has milk in it.\n";
+		else cout << "There's no milk in this coffee.\n";
+	}
+	void Drink()
+	{
+		cout << "You've drank your coffee.\n";
+		SetVolume(0);
+	}
+	void Spill()
+	{
+		cout << "You've spilled your coffee :c\n";
+		SetVolume(0);
+	}
+	void FreeCoffee()
+	{
+		cout << "Someone's bought you a cup of Coffee!\n";
+		SetPrice(0);
+	}
 
-		cout << name << "\n";
-		cout << this << "\n";
-		//Book first;
-		//cout << &first << "\n";
+	void SetName(const char* name)
+	{
+		if (strlen(name) == 0)
+			throw "Oops! Incorrect value for name!\n";
+
+		this->name = new char[100];
+		strcpy_s(this->name, 99, name);
+	}
+	void SetBreed(const char* breed)
+	{
+		if (strlen(breed) == 0)
+			throw "Oops! Incorrect value for breed!\n";
+
+		this->breed = new char[100];
+		strcpy_s(this->breed, 99, breed);
+	}
+	void SetPrice(double price)
+	{
+		if (price < 0)
+			throw "Oops! Incorrect value for price!\n";
+
+		this->price = price;
+	}
+	void SetVolume(int volume)
+	{
+		if (volume < 0 || volume > 500)
+			throw "Oops! Incorrect value for volume!\n";
+
+		this->volume = volume;
+	}
+	void SetMilk(bool milk)
+	{
+		if (milk < 0 || milk > 1)
+			throw "Oops! Incorrect value for milk!\n";
+
+		this->volume = milk;
+	}
+
+	unsigned int GetVolume() const
+	{
+		return volume;
+	}
+	bool GetMilk() const
+	{
+		return milk;
+	}
+	double GetPrice() const
+	{
+		return price;
+	}
+	string GetName() const
+	{
+		return name;
+	}
+	string GetBreed() const
+	{
+		return breed;
 	}
 };

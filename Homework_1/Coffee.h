@@ -23,7 +23,7 @@ public:
 		strcpy_s(name, 99, "Cappucino");
 	}
 	Coffee(const char* breed, const char* name,
-		int volume, int price, int milk)
+		int volume, double price, bool milk)
 	{
 		SetBreed(breed);
 		SetName(name);
@@ -98,7 +98,7 @@ public:
 		if (milk < 0 || milk > 1)
 			throw "Oops! Incorrect value for milk!\n";
 
-		this->volume = milk;
+		this->milk = milk;
 	}
 
 	unsigned int GetVolume() const
